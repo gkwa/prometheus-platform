@@ -1,0 +1,6 @@
+Style/TrailingCommaInLiteral:
+  Enabled: No
+Style/PercentLiteralDelimiters:
+  Enabled: No
+Lint/UnneededDisable:
+  Enabled: No
