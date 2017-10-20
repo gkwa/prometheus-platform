@@ -1,0 +1,222 @@
+language: ruby
+cache: bundler
+
+sudo: required
+dist: trusty
+
+group: edge
+
+addons:
+  apt:
+    sources:
+    - chef-current-trusty
+    packages:
+    - chefdk
+
+# Don't `bundle install` which takes about 1.5 mins
+install: echo "skip bundle install"
+
+services: docker
+
+env:
+  matrix:
+#  - INSTANCE=prometheus-amazonlinux
+#  FIXME - INSTANCE=prometheus-debian-7 # didnt spend much time diagnosing this, but I assume its debian-7 problem, return to this later
+  - INSTANCE=prometheus-debian-8
+  - INSTANCE=prometheus-debian-9
+  - INSTANCE=prometheus-centos-6
+  - INSTANCE=prometheus-centos-7
+  - INSTANCE=prometheus-fedora-25
+  - INSTANCE=prometheus-fedora-26
+  - INSTANCE=prometheus-fedora-latest
+  - INSTANCE=prometheus-ubuntu-1204
+  - INSTANCE=prometheus-ubuntu-1404
+  - INSTANCE=prometheus-ubuntu-1604
+  - INSTANCE=prometheus-ubuntu-1704
+  - INSTANCE=prometheus-opensuse-leap
+#  - INSTANCE=node-exporter-amazonlinux
+  - INSTANCE=node-exporter-debian-7
+  - INSTANCE=node-exporter-debian-8
+  - INSTANCE=node-exporter-debian-9
+  - INSTANCE=node-exporter-centos-6
+  - INSTANCE=node-exporter-centos-7
+  - INSTANCE=node-exporter-fedora-25
+  - INSTANCE=node-exporter-fedora-26
+  - INSTANCE=node-exporter-fedora-latest
+  - INSTANCE=node-exporter-ubuntu-1204
+  - INSTANCE=node-exporter-ubuntu-1404
+  - INSTANCE=node-exporter-ubuntu-1604
+  - INSTANCE=node-exporter-ubuntu-1704
+  - INSTANCE=node-exporter-opensuse-leap
+#  - INSTANCE=alertmanager-amazonlinux
+  - INSTANCE=alertmanager-debian-7
+  - INSTANCE=alertmanager-debian-8
+  - INSTANCE=alertmanager-debian-9
+  - INSTANCE=alertmanager-centos-6
+  - INSTANCE=alertmanager-centos-7
+  - INSTANCE=alertmanager-fedora-25
+  - INSTANCE=alertmanager-fedora-26
+  - INSTANCE=alertmanager-fedora-latest
+  - INSTANCE=alertmanager-ubuntu-1204
+  - INSTANCE=alertmanager-ubuntu-1404
+  - INSTANCE=alertmanager-ubuntu-1604
+  - INSTANCE=alertmanager-ubuntu-1704
+  - INSTANCE=alertmanager-opensuse-leap
+#  - INSTANCE=blackbox-exporter-amazonlinux
+  - INSTANCE=blackbox-exporter-debian-7
+  - INSTANCE=blackbox-exporter-debian-8
+  - INSTANCE=blackbox-exporter-debian-9
+  - INSTANCE=blackbox-exporter-centos-6
+  - INSTANCE=blackbox-exporter-centos-7
+  - INSTANCE=blackbox-exporter-fedora-25
+  - INSTANCE=blackbox-exporter-fedora-26
+  - INSTANCE=blackbox-exporter-fedora-latest
+  - INSTANCE=blackbox-exporter-ubuntu-1204
+  - INSTANCE=blackbox-exporter-ubuntu-1404
+  - INSTANCE=blackbox-exporter-ubuntu-1604
+  - INSTANCE=blackbox-exporter-ubuntu-1704
+  - INSTANCE=blackbox-exporter-opensuse-leap
+#  - INSTANCE=consul-exporter-amazonlinux
+  - INSTANCE=consul-exporter-debian-7
+  - INSTANCE=consul-exporter-debian-8
+  - INSTANCE=consul-exporter-debian-9
+  - INSTANCE=consul-exporter-centos-6
+  - INSTANCE=consul-exporter-centos-7
+  - INSTANCE=consul-exporter-fedora-25
+  - INSTANCE=consul-exporter-fedora-26
+  - INSTANCE=consul-exporter-fedora-latest
+  - INSTANCE=consul-exporter-ubuntu-1204
+  - INSTANCE=consul-exporter-ubuntu-1404
+  - INSTANCE=consul-exporter-ubuntu-1604
+  - INSTANCE=consul-exporter-ubuntu-1704
+  - INSTANCE=consul-exporter-opensuse-leap
+#  - INSTANCE=graphite-exporter-amazonlinux
+  - INSTANCE=graphite-exporter-debian-7
+  - INSTANCE=graphite-exporter-debian-8
+  - INSTANCE=graphite-exporter-debian-9
+  - INSTANCE=graphite-exporter-centos-6
+  - INSTANCE=graphite-exporter-centos-7
+  - INSTANCE=graphite-exporter-fedora-25
+  - INSTANCE=graphite-exporter-fedora-26
+  - INSTANCE=graphite-exporter-fedora-latest
+  - INSTANCE=graphite-exporter-ubuntu-1204
+  - INSTANCE=graphite-exporter-ubuntu-1404
+  - INSTANCE=graphite-exporter-ubuntu-1604
+  - INSTANCE=graphite-exporter-ubuntu-1704
+  - INSTANCE=graphite-exporter-opensuse-leap
+ # - INSTANCE=haproxy-exporter-amazonlinux
+  - INSTANCE=haproxy-exporter-debian-7
+  - INSTANCE=haproxy-exporter-debian-8
+  - INSTANCE=haproxy-exporter-debian-9
+  - INSTANCE=haproxy-exporter-centos-6
+  - INSTANCE=haproxy-exporter-centos-7
+  - INSTANCE=haproxy-exporter-fedora-25
+  - INSTANCE=haproxy-exporter-fedora-26
+  - INSTANCE=haproxy-exporter-fedora-latest
+  - INSTANCE=haproxy-exporter-ubuntu-1204
+  - INSTANCE=haproxy-exporter-ubuntu-1404
+  - INSTANCE=haproxy-exporter-ubuntu-1604
+  - INSTANCE=haproxy-exporter-ubuntu-1704
+  - INSTANCE=haproxy-exporter-opensuse-leap
+ # - INSTANCE=memcached-exporter-amazonlinux
+  - INSTANCE=memcached-exporter-debian-7
+  - INSTANCE=memcached-exporter-debian-8
+  - INSTANCE=memcached-exporter-debian-9
+  - INSTANCE=memcached-exporter-centos-6
+  - INSTANCE=memcached-exporter-centos-7
+  - INSTANCE=memcached-exporter-fedora-25
+  - INSTANCE=memcached-exporter-fedora-26
+  - INSTANCE=memcached-exporter-fedora-latest
+  - INSTANCE=memcached-exporter-ubuntu-1204
+  - INSTANCE=memcached-exporter-ubuntu-1404
+  - INSTANCE=memcached-exporter-ubuntu-1604
+  - INSTANCE=memcached-exporter-ubuntu-1704
+  - INSTANCE=memcached-exporter-opensuse-leap
+# need mysql running on localhost:3306 for this
+# # - INSTANCE=mysqld-exporter-amazonlinux
+#  - INSTANCE=mysqld-exporter-debian-7
+#  - INSTANCE=mysqld-exporter-debian-8
+#  - INSTANCE=mysqld-exporter-debian-9
+#  - INSTANCE=mysqld-exporter-centos-6
+#  - INSTANCE=mysqld-exporter-centos-7
+#  - INSTANCE=mysqld-exporter-fedora-25
+#  - INSTANCE=mysqld-exporter-fedora-26
+#  - INSTANCE=mysqld-exporter-fedora-latest
+#  - INSTANCE=mysqld-exporter-ubuntu-1204
+#  - INSTANCE=mysqld-exporter-ubuntu-1404
+#  - INSTANCE=mysqld-exporter-ubuntu-1604
+#  - INSTANCE=mysqld-exporter-ubuntu-1704
+#  - INSTANCE=mysqld-exporter-opensuse-leap
+ # - INSTANCE=node-exporter-amazonlinux
+  - INSTANCE=node-exporter-debian-7
+  - INSTANCE=node-exporter-debian-8
+  - INSTANCE=node-exporter-debian-9
+  - INSTANCE=node-exporter-centos-6
+  - INSTANCE=node-exporter-centos-7
+  - INSTANCE=node-exporter-fedora-25
+  - INSTANCE=node-exporter-fedora-26
+  - INSTANCE=node-exporter-fedora-latest
+  - INSTANCE=node-exporter-ubuntu-1204
+  - INSTANCE=node-exporter-ubuntu-1404
+  - INSTANCE=node-exporter-ubuntu-1604
+  - INSTANCE=node-exporter-ubuntu-1704
+  - INSTANCE=node-exporter-opensuse-leap
+ # - INSTANCE=prometheus-amazonlinux
+  - INSTANCE=prometheus-debian-7
+  - INSTANCE=prometheus-debian-8
+  - INSTANCE=prometheus-debian-9
+  - INSTANCE=prometheus-centos-6
+  - INSTANCE=prometheus-centos-7
+  - INSTANCE=prometheus-fedora-25
+  - INSTANCE=prometheus-fedora-26
+  - INSTANCE=prometheus-fedora-latest
+  - INSTANCE=prometheus-ubuntu-1204
+  - INSTANCE=prometheus-ubuntu-1404
+  - INSTANCE=prometheus-ubuntu-1604
+  - INSTANCE=prometheus-ubuntu-1704
+  - INSTANCE=prometheus-opensuse-leap
+ # - INSTANCE=pushgateway-amazonlinux
+  - INSTANCE=pushgateway-debian-7
+  - INSTANCE=pushgateway-debian-8
+  - INSTANCE=pushgateway-debian-9
+  - INSTANCE=pushgateway-centos-6
+  - INSTANCE=pushgateway-centos-7
+  - INSTANCE=pushgateway-fedora-25
+  - INSTANCE=pushgateway-fedora-26
+  - INSTANCE=pushgateway-fedora-latest
+  - INSTANCE=pushgateway-ubuntu-1204
+  - INSTANCE=pushgateway-ubuntu-1404
+  - INSTANCE=pushgateway-ubuntu-1604
+  - INSTANCE=pushgateway-ubuntu-1704
+  - INSTANCE=pushgateway-opensuse-leap
+ # - INSTANCE=statsd-exporter-amazonlinux
+  - INSTANCE=statsd-exporter-debian-7
+  - INSTANCE=statsd-exporter-debian-8
+  - INSTANCE=statsd-exporter-debian-9
+  - INSTANCE=statsd-exporter-centos-6
+  - INSTANCE=statsd-exporter-centos-7
+  - INSTANCE=statsd-exporter-fedora-25
+  - INSTANCE=statsd-exporter-fedora-26
+  - INSTANCE=statsd-exporter-fedora-latest
+  - INSTANCE=statsd-exporter-ubuntu-1204
+  - INSTANCE=statsd-exporter-ubuntu-1404
+  - INSTANCE=statsd-exporter-ubuntu-1604
+  - INSTANCE=statsd-exporter-ubuntu-1704
+  - INSTANCE=statsd-exporter-opensuse-leap
+
+before_script:
+- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+- eval "$(chef shell-init bash)"
+- chef --version
+- cookstyle --version
+- foodcritic --version
+
+script:
+- KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
+
+matrix:
+  include:
+  - script:
+    - chef exec delivery local lint
+    - chef exec delivery local syntax
+    env: UNIT_AND_LINT=1
