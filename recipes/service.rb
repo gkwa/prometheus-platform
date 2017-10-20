@@ -20,10 +20,11 @@ node[cookbook_name]['components'].each_pair do |comp, config|
   next unless config['install?']
   configfile = "#{node[cookbook_name]['prefix_home']}/#{comp}/#{comp}.yml"
 
-  systemd_unit "#{comp}.service" do
-    content config['unit']
-    action %i[create enable start]
-    subscribes :reload_or_try_restart, "file[#{configfile}]" if auto_restart
-    subscribes :try_restart, "systemd_unit[#{comp}.service]" if auto_restart
+  poise_service_user node[cookbook_name]['user']
+
+  poise_service comp.to_s do
+    command config['unit']['Service']['ExecStart']
+    directory config['unit']['Service']['WorkingDirectory']
+    subscribes :reload, "file[#{configfile}]" if auto_restart
   end
 end
