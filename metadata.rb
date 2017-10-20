@@ -12,5 +12,6 @@ chef_version '>= 12.14'
 
 depends 'cluster-search'
 depends 'ark'
+depends 'poise-service'
 
 supports 'centos', '>= 7.1'

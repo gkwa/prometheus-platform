@@ -257,7 +257,7 @@ node[cookbook_name]['components'].each_pair do |comp, config|
   }
 
   # cli need substitution too
-  cli = [bin, opts_to_str(config['cli_opts'])].flatten.join(" \\\n") % keys
+  cli = [bin, opts_to_str(config['cli_opts'])].flatten.join(' ') % keys
   keys[:cli] = cli
   default[cookbook_name]['components'][comp] = interpol(config.to_h, keys)
 end
